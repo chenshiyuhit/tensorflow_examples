@@ -3,11 +3,11 @@
 ### multi_layer_CNN_loss
 
 <div align="center">
-<img src="/CNN/multi_layer_CNN_loss.svg" alt="" width="800" />
+<img src="/CNN/multi_layer_CNN_loss.svg" alt="" width="400" />
 </div>
 
 ### multi_layer_CNN_accuracy
 
 <div align="center">
-<img src="/CNN/multi_layer_CNN_accuracy.svg" alt="" width="800" />
+<img src="/CNN/multi_layer_CNN_accuracy.svg" alt="" width="400" />
 </div>
