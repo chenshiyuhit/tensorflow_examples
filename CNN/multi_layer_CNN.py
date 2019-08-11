@@ -41,7 +41,7 @@ biases = {
 
 # create some wrappers for simplicity
 def conv2d(x, w, b, strides=1):
-    x = tf.nn.conv2d(x, w, strides=[1, strides, strides, 1], padding='SAME')
+    x = tf.nn.conv2d(x, w, strides=[1, strides, strides, 1], padding='SAME')    # output:[batch_size, H, W, filter_num]
     x = tf.nn.bias_add(x, b)
     return tf.nn.relu(x)
 
@@ -55,27 +55,27 @@ def conv_net(x, weights, biases, dropout):
     x = tf.reshape(x, shape=[-1, 28, 28, 1])
 
     # conv layer1
-    conv1 = conv2d(x, weights['wc1'], biases['bc1'])
+    conv1 = conv2d(x, weights['wc1'], biases['bc1'])    # [100,28,28,32]
     # maxpool layer1
-    conv1 = maxpool2d(conv1)
+    conv1 = maxpool2d(conv1)    # [100,14,14,32]
 
     # conv layer2
-    conv2 = conv2d(conv1, weights['wc2'], biases['bc2'])
+    conv2 = conv2d(conv1, weights['wc2'], biases['bc2'])    # [100,14,14,64]
     # maxpool layer2
-    conv2 = maxpool2d(conv2)
+    conv2 = maxpool2d(conv2)    # [100,7,7,64]
 
     # fully connected layer
-    fc1 = tf.reshape(conv2, [-1, weights['wf1'].get_shape().as_list()[0]])
-    fc1 = tf.add(tf.matmul(fc1, weights['wf1']), biases['bf1'])
-    fc1 = tf.nn.relu(fc1)
+    fc1 = tf.reshape(conv2, [-1, weights['wf1'].get_shape().as_list()[0]])  # [100,7*7*64]
+    fc1 = tf.add(tf.matmul(fc1, weights['wf1']), biases['bf1']) # [100,1024]
+    fc1 = tf.nn.relu(fc1)   # [100,1024]
 
     # dropput
-    fc1 = tf.nn.dropout(fc1, dropout)
+    fc1 = tf.nn.dropout(fc1, dropout)   # [100,1024]
 
     # output
-    out = tf.add(tf.matmul(fc1, weights['out']), biases['out'])
+    out = tf.add(tf.matmul(fc1, weights['out']), biases['out']) # [100,10]
 
-    return out
+    return out  # [100,10]
 
 # construct CNN model
 logits = conv_net(x, weights, biases, keep_prob)
